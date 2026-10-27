@@ -1,6 +1,7 @@
 # STAMPED research object rubric
 
 A local-first assessment workspace for the seven STAMPED principles.
+The public deployment is configured for [leej3.github.io/stamped-rubric](https://leej3.github.io/stamped-rubric/).
 It loads versioned rubric data from the sibling `stamped-rubric-schema` repository.
 
 ## Run locally
@@ -96,15 +97,32 @@ Imports are limited to 2 MB, including decompressed links.
 
 The standalone HTML report contains all reviewers, exact weights, normalized scores, responses, evidence, uncertainty and feedback.
 JSON is the lossless, re-importable assessment format.
-A shared localhost URL only works on the same computer; deploy the static build to use links across computers later.
+A shared localhost URL only works on the same computer.
+Links created on the public deployment work across computers; the complete assessment remains encoded in the fragment, without a submission backend.
 
 ## Worked example
 
-Choose **Worked example** to load the assessment of [paper-remodnav](https://github.com/psychoinformatics-de/paper-remodnav).
+On a first visit with no saved workspace or shared-assessment link, the app opens the assessment of [paper-remodnav](https://github.com/psychoinformatics-de/paper-remodnav).
+A banner identifies this as example data and offers **Start a new assessment**.
+Existing local drafts and shared-assessment links take precedence; reloading never replaces them with the example.
+Choose **Worked example** later to reopen it explicitly.
 It records source inspection of a specific revision and its discoverable components.
 The analysis pipeline and external data payloads were not executed or downloaded.
 Consult its evidence and limitations before interpreting scores.
 One assessment exercises the workflow; it does not establish reviewer agreement.
+
+## GitHub Pages deployment
+
+The deployment workflow runs tests and builds on pushes to `main` or a manual Actions dispatch.
+Configure the repository's **Settings → Pages → Source** as **GitHub Actions**.
+The workflow publishes only `dist/`; bundled schema data means CI does not need access to the sibling repository.
+
+Production builds and previews use `/stamped-rubric/` as the Vite base path; `npm run dev` uses `/`.
+Data requests use Vite's base URL as well, so the rubric, assessment schema, and example load beneath the repository subpath.
+With `npm run preview`, open the printed `/stamped-rubric/` URL.
+
+The static workflow follows the [Vite GitHub Pages guide](https://vite.dev/guide/static-deploy.html#github-pages).
+Assessment files and edits are not uploaded by the deployment workflow or app.
 
 ## Project layout
 

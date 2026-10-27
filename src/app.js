@@ -21,6 +21,10 @@ import {
 import { renderReport } from "./report.js";
 
 const STORAGE = "stamped-rubric-workspace-v1";
+// Vite supplies the deployment prefix; direct Node imports used in tests do not.
+const BASE_URL =
+  typeof import.meta.env === "undefined" ? "/" : import.meta.env.BASE_URL;
+const dataURL = (name) => `${BASE_URL}data/${name}`;
 const COLORS = [
   "#267564",
   "#c57932",
@@ -316,8 +320,13 @@ function render() {
     .map((d) => d.id)
     .filter(Boolean);
   const a = active();
+  const showingExample =
+    bundle.research_object.locator ===
+      "https://github.com/psychoinformatics-de/paper-remodnav" &&
+    bundle.assessments.some((review) => review.id === "remodnav-initial");
   root.innerHTML = `<header class="masthead"><a class="brand" href="#" aria-label="STAMPED rubric home"><span class="brand-mark">S<span>✳</span></span><span>STAMPED<small>Research object rubric</small></span></a><div class="header-meta"><span class="draft-tag">PILOT · v${e(rubric.version)}</span><span id="save-state">${storageFailed ? "Storage unavailable — export to save" : "Saved in this browser"}</span></div></header>
 <div class="topline"><span>A practical perspective on reproducible research.</span><nav aria-label="File actions"><button data-action="new" class="text-button">New object</button><button data-action="example" class="text-button">Worked example ↗</button><button data-action="import" class="secondary small">Import JSON</button><button data-action="merge" class="text-button">Add reviews</button><button data-action="export" class="secondary small">Export JSON</button><button data-action="share" class="primary small">Share link</button></nav></div>
+${showingExample ? '<section class="demo-banner" aria-label="Worked example"><div><strong>Explore the REMoDNaV worked example</strong><p>These are example ratings from source inspection, not a verified rerun. Expand a criterion to inspect its evidence and rationale, or start a blank assessment for your own research object. Your edits stay in this browser.</p></div><button data-action="new" class="primary small">Start a new assessment</button></section>' : ""}
 <p id="notice" class="notice" role="status"${notice ? "" : " hidden"}>${e(notice)}</p><input type="file" id="import-file" accept="application/json,.json" hidden>
 <main id="workspace"><section class="object-panel"><span class="eyebrow">Research object</span><h1>${e(bundle.research_object.title)}</h1><div class="object-link">${urlLink(bundle.research_object.locator, bundle.research_object.locator || "Add a DOI, repository, directory, or publication below")}</div><details id="object-details" class="object-details"${bundle.research_object.locator ? "" : " open"}><summary>Edit object & assessment scope</summary><div class="form-row"><label>Title<input data-object="title" value="${e(bundle.research_object.title)}"></label><label>Entry point / locator<input data-object="locator" value="${e(bundle.research_object.locator)}" placeholder="https://doi.org/… or a repository / directory"></label></div><div class="form-row"><label>Object revision / version<input data-object="revision" value="${e(bundle.research_object.revision)}" placeholder="Commit, DOI version, or dated snapshot"></label><label>Assessment scope<textarea rows="2" data-object="scope" placeholder="What is included? Start at the object and follow its explicit references.">${e(bundle.research_object.scope)}</textarea></label></div></details></section>
 <section class="reviewer-bar"><label>Viewing assessment<select id="reviewer-select">${bundle.assessments.map((r) => `<option value="${e(r.id)}"${selected(r.id, a.id)}>${e(r.reviewer.name)}${r.review_of ? " · follow-up" : ""}</option>`).join("")}</select></label><button data-action="add-reviewer" class="secondary small">+ Independent assessment</button><button data-action="follow-up" class="secondary small">+ Review this assessment</button><details id="reviewer-details"><summary>Identity & notes</summary><div class="reviewer-fields"><label>Reviewer display name<input data-reviewer="name" value="${e(a.reviewer.name)}"></label><label>Reviewer identity<input data-reviewer="id" value="${e(a.reviewer.id)}"></label><p class="caption">Self-declared identity. The same fields apply to every reviewer.</p><label>Overall assessment comment<textarea data-assessment="comment" rows="3">${e(a.comment)}</textarea></label><p class="caption">Assessment: ${e(a.id)}<br>Created ${e(a.created_at)}${a.review_of ? `<br>Reviews ${e(a.review_of)}` : ""}</p></div></details></section>
@@ -423,7 +432,7 @@ root.addEventListener("click", async (event) => {
         "Open the worked REMoDNaV example? The current workspace will be kept as a local backup.",
       ))
     ) {
-      const res = await fetch("/data/paper-remodnav.json");
+      const res = await fetch(dataURL("paper-remodnav.json"));
       if (!res.ok) throw new Error("Worked example is unavailable.");
       replace(
         await res.json(),
@@ -624,11 +633,11 @@ root.addEventListener("input", (event) => {
 });
 async function start() {
   const [raw, schema] = await Promise.all([
-    fetch("/data/rubric.json").then((r) => {
+    fetch(dataURL("rubric.json")).then((r) => {
       if (!r.ok) throw new Error("Rubric missing; run npm run sync:schemas.");
       return r.text();
     }),
-    fetch("/data/assessment-bundle.schema.json").then((r) => r.json()),
+    fetch(dataURL("assessment-bundle.schema.json")).then((r) => r.json()),
   ]);
   rubric = JSON.parse(raw);
   digest = await sha256(raw);
@@ -648,6 +657,18 @@ async function start() {
       "Saved workspace could not be loaded: " +
       error.message +
       " Use Download recovery file to retrieve the stored copy.";
+  }
+  if (!saved && !location.hash.startsWith("#assessment=")) {
+    try {
+      const example = await fetch(dataURL("paper-remodnav.json"));
+      if (!example.ok) throw new Error("Worked example is unavailable.");
+      bundle = validate(await example.json());
+      activeId = bundle.assessments[0].id;
+      save(false);
+    } catch (error) {
+      notice = "The worked example could not be loaded: " + error.message +
+        " You can still start a new assessment.";
+    }
   }
   if (location.hash.startsWith("#assessment="))
     try {

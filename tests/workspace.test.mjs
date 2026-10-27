@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { registerHooks } from "node:module";
 import { JSDOM } from "jsdom";
-import { encodeBundle } from "../src/model.js";
+import { encodeBundle, newBundle } from "../src/model.js";
+import viteConfig from "../vite.config.js";
 const STORAGE = "stamped-rubric-workspace-v1";
 const sample = JSON.parse(
   await readFile(
@@ -11,11 +12,25 @@ const sample = JSON.parse(
     "utf8",
   ),
 );
+const rubric = JSON.parse(
+  await readFile(new URL("../public/data/rubric.json", import.meta.url), "utf8"),
+);
+let appBase = null;
+let requestedURLs = [];
 registerHooks({
   load(url, context, next) {
     if (url.endsWith(".css"))
       return { format: "module", source: "export {};", shortCircuit: true };
-    return next(url, context);
+    const result = next(url, context);
+    if (appBase && url.includes("/src/app.js?")) {
+      return {
+        ...result,
+        source: result.source.toString().replaceAll(
+          "import.meta.env", JSON.stringify({ BASE_URL: appBase }),
+        ),
+      };
+    }
+    return result;
   },
 });
 let dom;
@@ -26,10 +41,13 @@ async function until(fn) {
   }
   throw new Error("UI did not reach the expected state");
 }
-async function setup({ saved = null, hash = "" } = {}) {
+async function setup({ saved = null, hash = "", fresh = false, base = null } = {}) {
+  appBase = base;
+  requestedURLs = [];
+  if (fresh) saved = JSON.stringify(newBundle(rubric, sample.rubric_sha256));
   dom?.window.close();
   dom = new JSDOM('<div id="app"></div>', {
-    url: "http://localhost:5173/" + hash,
+    url: "http://localhost:5173" + (base ?? "/") + hash,
     pretendToBeVisual: true,
   });
   for (const key of [
@@ -55,10 +73,13 @@ async function setup({ saved = null, hash = "" } = {}) {
     this.open = false;
     this.dispatchEvent(new dom.window.Event("close"));
   };
-  globalThis.fetch = async (url) =>
-    new Response(await readFile(new URL("../public" + url, import.meta.url)), {
+  globalThis.fetch = async (url) => {
+    requestedURLs.push(url);
+    const localPath = base ? "/" + url.slice(base.length) : url;
+    return new Response(await readFile(new URL("../public" + localPath, import.meta.url)), {
       status: 200,
     });
+  };
   if (saved) localStorage.setItem(STORAGE, saved);
   await import("../src/app.js?test=" + crypto.randomUUID());
   await until(
@@ -87,7 +108,7 @@ function acceptDialog(value) {
   d.close();
 }
 test("workspace restores partial drafts including blank evidence locators", async () => {
-  await setup();
+  await setup({ fresh: true });
   input('[data-object="title"]', "Draft under review");
   click('[data-action="add-evidence"][data-criterion="S-01"]');
   input(
@@ -134,7 +155,7 @@ test("follow-up preserves original responses and stores optional review fields",
   assert(document.querySelector("#criterion-S-01 .original"));
 });
 test("example opening preserves timestamps and bulky URL shares fall back visibly", async () => {
-  await setup();
+  await setup({ fresh: true });
   click('[data-action="example"]');
   acceptDialog();
   await until(() =>
@@ -171,4 +192,44 @@ test("all-zero weight changes are rejected without corrupting score state", asyn
     document.querySelector("#notice").textContent.includes("positive weight"),
   );
   assert.equal(document.querySelector(".score strong").textContent, "91.7");
+});
+
+test("first visit opens and saves the example without changing its review timestamps", async () => {
+  await setup();
+  assert.equal(document.querySelector("h1").textContent, sample.research_object.title);
+  assert(document.querySelector(".demo-banner"));
+  const saved = JSON.parse(localStorage.getItem(STORAGE));
+  assert.equal(saved.assessments[0].updated_at, sample.assessments[0].updated_at);
+  assert.equal(saved.assessments[0].id, "remodnav-initial");
+});
+test("explicitly starting a new assessment stays blank on later visits", async () => {
+  await setup();
+  click('.demo-banner [data-action="new"]');
+  acceptDialog();
+  await until(() => document.querySelector("h1").textContent === "Untitled research object");
+  assert.equal(document.querySelector(".demo-banner"), null);
+  assert.equal(document.querySelector(".score strong").textContent, "0.0");
+  const saved = localStorage.getItem(STORAGE);
+  await setup({ saved });
+  assert.equal(document.querySelector("h1").textContent, "Untitled research object");
+  assert(!requestedURLs.some((url) => url.endsWith("paper-remodnav.json")));
+});
+test("shared assessment takes precedence over the first-visit demo", async () => {
+  const shared = structuredClone(sample);
+  shared.research_object.title = "Shared review overrides demo";
+  await setup({ hash: "#assessment=" + await encodeBundle(shared) });
+  assert.equal(document.querySelector("h1").textContent, shared.research_object.title);
+  assert(!requestedURLs.some((url) => url.endsWith("paper-remodnav.json")));
+});
+test("production repository subpath prefixes every fetched data asset", async () => {
+  assert.equal(viteConfig({command: "build"}).base, "/stamped-rubric/");
+  assert.equal(viteConfig({command: "serve", isPreview: true}).base, "/stamped-rubric/");
+  assert.equal(viteConfig({command: "serve", isPreview: false}).base, "/");
+  await setup({ base: "/stamped-rubric/" });
+  assert.deepEqual(new Set(requestedURLs), new Set([
+    "/stamped-rubric/data/rubric.json",
+    "/stamped-rubric/data/assessment-bundle.schema.json",
+    "/stamped-rubric/data/paper-remodnav.json",
+  ]));
+  assert(document.querySelector(".demo-banner"));
 });
