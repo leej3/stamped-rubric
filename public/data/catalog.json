@@ -1,0 +1,11 @@
+{
+  "rubric_version": "0.1.0",
+  "rubric_sha256": "05d96a057d8cfe79927f587f6994cf386e12bca83d55b3e7deee8e37ab7bcbb4",
+  "source_directory": "stamped-rubric-schema",
+  "manuscript": {
+    "repository": "https://github.com/stamped-principles/stamped-paper",
+    "revision": "5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea",
+    "path": "main.tex",
+    "status": "provisional"
+  }
+}

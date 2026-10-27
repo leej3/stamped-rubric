@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:stamped:assessment-bundle:schema:1.0.0",
+  "title": "STAMPED assessment bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "format_version": {
+      "const": "1.0.0"
+    },
+    "rubric_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[a-zA-Z0-9.-]+)?$"
+    },
+    "rubric_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "research_object": {
+      "$ref": "#/$defs/ResearchObject"
+    },
+    "assessments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Assessment"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "format_version",
+    "rubric_version",
+    "research_object",
+    "assessments"
+  ],
+  "$defs": {
+    "ResearchObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "locator",
+        "revision",
+        "scope"
+      ]
+    },
+    "Reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "discovery_path": {
+          "type": "string"
+        },
+        "access_status": {
+          "enum": [
+            "accessible",
+            "inaccessible",
+            "not_checked"
+          ]
+        }
+      },
+      "required": [
+        "locator",
+        "description",
+        "discovery_path",
+        "access_status"
+      ]
+    },
+    "Response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 3
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "minItems": 0
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "evidence_rating": {
+          "enum": [
+            null,
+            "insufficient",
+            "partial",
+            "sufficient",
+            "conflicting"
+          ]
+        },
+        "confidence": {
+          "enum": [
+            null,
+            "low",
+            "moderate",
+            "high"
+          ]
+        },
+        "feedback": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "boolean"
+        },
+        "observation": {
+          "enum": [
+            "observed",
+            "not_assessed",
+            "not_findable",
+            "inaccessible",
+            "absent"
+          ]
+        }
+      },
+      "required": [
+        "score"
+      ]
+    },
+    "Weights": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "S": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000.0
+        },
+        "T": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000.0
+        },
+        "A": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000.0
+        },
+        "M": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000.0
+        },
+        "P": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000.0
+        },
+        "E": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000.0
+        },
+        "D": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000.0
+        }
+      },
+      "required": [
+        "S",
+        "T",
+        "A",
+        "M",
+        "P",
+        "E",
+        "D"
+      ]
+    },
+    "Assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewer": {
+          "$ref": "#/$defs/Reviewer"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "review_of": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "weights": {
+          "$ref": "#/$defs/Weights"
+        },
+        "responses": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[STAMPED]-[0-9]{2,}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/Response"
+          }
+        },
+        "comment": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "reviewer",
+        "created_at",
+        "updated_at",
+        "review_of",
+        "weights",
+        "responses",
+        "comment"
+      ]
+    }
+  }
+}

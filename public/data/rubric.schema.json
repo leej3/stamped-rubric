@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:stamped:rubric:schema:0.1.0",
+  "title": "STAMPED rubric",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[a-zA-Z0-9.-]+)?$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "provisional",
+            "pinned"
+          ]
+        }
+      },
+      "required": [
+        "repository",
+        "revision",
+        "path",
+        "status"
+      ]
+    },
+    "dimensions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Dimension"
+      },
+      "minItems": 7,
+      "maxItems": 7
+    },
+    "principles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Principle"
+      },
+      "minItems": 1
+    },
+    "criteria": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Criterion"
+      },
+      "minItems": 7
+    }
+  },
+  "required": [
+    "version",
+    "title",
+    "description",
+    "source",
+    "dimensions",
+    "principles",
+    "criteria"
+  ],
+  "$defs": {
+    "Dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "enum": [
+            "S",
+            "T",
+            "A",
+            "M",
+            "P",
+            "E",
+            "D"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "description"
+      ]
+    },
+    "Principle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[STAMPED]\\.[1-9][0-9]*$"
+        },
+        "dimension": {
+          "enum": [
+            "S",
+            "T",
+            "A",
+            "M",
+            "P",
+            "E",
+            "D"
+          ]
+        },
+        "level": {
+          "enum": [
+            "must",
+            "should",
+            "may"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "dimension",
+        "level",
+        "statement"
+      ]
+    },
+    "Anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "value",
+        "label",
+        "description"
+      ]
+    },
+    "Criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[STAMPED]-[0-9]{2,}$"
+        },
+        "dimension": {
+          "enum": [
+            "S",
+            "T",
+            "A",
+            "M",
+            "P",
+            "E",
+            "D"
+          ]
+        },
+        "principles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_guidance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Anchor"
+          },
+          "minItems": 2
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "section": {
+              "type": "string",
+              "minLength": 1
+            },
+            "locator": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "section",
+            "locator"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "dimension",
+        "principles",
+        "title",
+        "question",
+        "rationale",
+        "evidence_guidance",
+        "anchors",
+        "source"
+      ]
+    }
+  }
+}

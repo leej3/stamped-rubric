@@ -1,0 +1,1476 @@
+{
+  "version": "0.1.0",
+  "title": "STAMPED research-object rubric",
+  "description": "A manuscript-derived pilot rubric for describing STAMPED fulfillment in a research object. Scores summarize this perspective under declared weights; they are not general research-quality judgments or validated measurements.",
+  "source": {
+    "repository": "https://github.com/stamped-principles/stamped-paper",
+    "revision": "5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea",
+    "path": "main.tex",
+    "status": "provisional"
+  },
+  "dimensions": [
+    {
+      "id": "S",
+      "label": "Self-containment",
+      "description": "Everything needed is reachable from the research object."
+    },
+    {
+      "id": "T",
+      "label": "Tracking",
+      "description": "Component states and the history of their transformations are recorded."
+    },
+    {
+      "id": "A",
+      "label": "Actionability",
+      "description": "Instructions and executable procedures make the object usable."
+    },
+    {
+      "id": "M",
+      "label": "Modularity",
+      "description": "Components have separable, composable boundaries."
+    },
+    {
+      "id": "P",
+      "label": "Portability",
+      "description": "Explicit specifications avoid dependence on undocumented host state."
+    },
+    {
+      "id": "E",
+      "label": "Ephemerality",
+      "description": "Computations use fresh, disposable environments."
+    },
+    {
+      "id": "D",
+      "label": "Distributability",
+      "description": "Others can obtain the intended state persistently."
+    }
+  ],
+  "principles": [
+    {
+      "code": "S.1",
+      "dimension": "S",
+      "level": "must",
+      "statement": "All modules and components essential to replicate computational execution MUST be reachable within a single top-level research object."
+    },
+    {
+      "code": "S.2",
+      "dimension": "S",
+      "level": "must",
+      "statement": "License declarations for all components are themselves part of the research object and MUST be retrievable alongside the content they govern."
+    },
+    {
+      "code": "T.1",
+      "dimension": "T",
+      "level": "must",
+      "statement": "Persistent content identification MUST be recorded for all components."
+    },
+    {
+      "code": "T.2",
+      "dimension": "T",
+      "level": "should",
+      "statement": "All components SHOULD be tracked using the same content-addressed version control system."
+    },
+    {
+      "code": "T.3",
+      "dimension": "T",
+      "level": "must",
+      "statement": "Provenance of all modifications MUST be recorded."
+    },
+    {
+      "code": "T.4",
+      "dimension": "T",
+      "level": "should",
+      "statement": "Code-driven provenance SHOULD be recorded programmatically."
+    },
+    {
+      "code": "T.5",
+      "dimension": "T",
+      "level": "must",
+      "statement": "Provenance records MUST include the versions of all components involved."
+    },
+    {
+      "code": "A.1",
+      "dimension": "A",
+      "level": "must",
+      "statement": "Research object MUST contain sufficient instructions to reproduce all computational results."
+    },
+    {
+      "code": "A.2",
+      "dimension": "A",
+      "level": "should",
+      "statement": "Procedures SHOULD be expressed as executable specifications."
+    },
+    {
+      "code": "M.1",
+      "dimension": "M",
+      "level": "should",
+      "statement": "Components SHOULD be organized in a modular structure."
+    },
+    {
+      "code": "M.2",
+      "dimension": "M",
+      "level": "may",
+      "statement": "Components MAY be included directly or linked as subdatasets."
+    },
+    {
+      "code": "M.3",
+      "dimension": "M",
+      "level": "should",
+      "statement": "Each module's license SHOULD be declared independently and checked for compatibility at the boundaries where modules are combined."
+    },
+    {
+      "code": "M.4",
+      "dimension": "M",
+      "level": "should",
+      "statement": "Components governed by different access requirements SHOULD be isolated in separate modules where practical."
+    },
+    {
+      "code": "P.1",
+      "dimension": "P",
+      "level": "must",
+      "statement": "Procedures MUST NOT depend on any undocumented host environment state."
+    },
+    {
+      "code": "P.2",
+      "dimension": "P",
+      "level": "must",
+      "statement": "Computational environments MUST be explicitly specified."
+    },
+    {
+      "code": "P.3",
+      "dimension": "P",
+      "level": "must",
+      "statement": "Environment definitions MUST be version controlled."
+    },
+    {
+      "code": "E.1",
+      "dimension": "E",
+      "level": "should",
+      "statement": "Computational results SHOULD be produced in ephemeral environments."
+    },
+    {
+      "code": "D.1",
+      "dimension": "D",
+      "level": "must",
+      "statement": "All referenced modules and components MUST be persistently retrievable by others."
+    },
+    {
+      "code": "D.2",
+      "dimension": "D",
+      "level": "should",
+      "statement": "Environment specifications SHOULD support reproducible builds."
+    },
+    {
+      "code": "D.3",
+      "dimension": "D",
+      "level": "should",
+      "statement": "Each module SHOULD carry an explicit license with a resolvable identifier."
+    }
+  ],
+  "criteria": [
+    {
+      "id": "S-01",
+      "dimension": "S",
+      "principles": [
+        "S.1"
+      ],
+      "title": "A discoverable object boundary",
+      "question": "Can the starting object lead a recipient to the components within its stated computational scope?",
+      "rationale": "Self-containment starts at one root; knowledge obtained independently of that root cannot repair a missing connection.",
+      "evidence_guidance": "Inspect the root record, README, manuscript availability statement, manifests and their explicit links. Record the scope and the path followed.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No route from the starting object to its computational components is identified."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "The starting object names related resources but does not locate the computational components."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "The root locates components, but at least one essential component or its relationship to the object is left implicit."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "The root locates all identified essential components and makes their relationship to the stated computation explicit."
+        }
+      ],
+      "source": {
+        "section": "Self-containment",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L136"
+      }
+    },
+    {
+      "id": "S-02",
+      "dimension": "S",
+      "principles": [
+        "S.1"
+      ],
+      "title": "Data and code within the boundary",
+      "question": "Are the data and code needed for the scoped computations included or explicitly referenced?",
+      "rationale": "A published narrative alone cannot supply absent computational inputs or transformations.",
+      "evidence_guidance": "Trace every scoped result to its input data and source code. Direct files and explicit external references are equally acceptable. Retrieval reliability is assessed under D.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Neither required data nor analysis code is included or explicitly referenced."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Data or code is included or referenced, but the other category is missing."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Both data and code are represented, but identified essential items are missing or implicit."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "All identified essential data and code are included or explicitly referenced, including any controlled-access inputs."
+        }
+      ],
+      "source": {
+        "section": "Self-containment",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L131"
+      }
+    },
+    {
+      "id": "S-03",
+      "dimension": "S",
+      "principles": [
+        "S.1"
+      ],
+      "title": "Environment and configuration within the boundary",
+      "question": "Are required environments, tools, parameters and configuration included or explicitly referenced?",
+      "rationale": "The object boundary includes computational ingredients beyond data and source files.",
+      "evidence_guidance": "Inspect environment definitions, dependency declarations, command parameters and configuration files. This assesses presence or reference, not version precision or host portability.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No environment or configuration dependencies are included or explicitly referenced."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Environment dependencies or computation settings are represented, but the other category is left implicit."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Both environment dependencies and settings are represented, but at least one identified essential item is implicit."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "All identified essential environment dependencies and settings are included or explicitly referenced; intentional defaults are identifiable."
+        }
+      ],
+      "source": {
+        "section": "Self-containment",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L135"
+      }
+    },
+    {
+      "id": "S-04",
+      "dimension": "S",
+      "principles": [
+        "S.2"
+      ],
+      "title": "Reachable license declarations",
+      "question": "Can license declarations for the components be reached through the research object?",
+      "rationale": "The manuscript explicitly makes license declarations part of the object boundary.",
+      "evidence_guidance": "Follow component-to-license references. A root license is sufficient only where its stated scope covers the relevant components; record missing declarations rather than infer permissions.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No component license declaration is reachable from the object."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "A root license is reachable, but its coverage of bundled or linked components is unspecified."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Declarations are reachable and scoped for some components, but at least one component remains uncovered."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Declarations governing all identified components are reachable and attributable to those components."
+        }
+      ],
+      "source": {
+        "section": "Self-containment",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L132"
+      }
+    },
+    {
+      "id": "T-01",
+      "dimension": "T",
+      "principles": [
+        "T.1"
+      ],
+      "title": "Exact component identities",
+      "question": "Are exact content identities recorded for all components?",
+      "rationale": "Content identities distinguish a reproducible state from an ambiguous version name.",
+      "evidence_guidance": "Inspect commits, checksums, digests, registered content identifiers and submodule references. Include data, code, environment definitions, configurations and results.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Component states have no recorded persistent identifiers."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Only names, moving branches or version labels identify component states."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Content identities exist for some components, but one or more essential components have only ambiguous identities."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "All identified essential components have content identities tied to the assessed state."
+        }
+      ],
+      "source": {
+        "section": "Tracking",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L153"
+      }
+    },
+    {
+      "id": "T-02",
+      "dimension": "T",
+      "principles": [
+        "T.2"
+      ],
+      "title": "Integrated content-addressed tracking",
+      "question": "Are component states represented in one compatible content-addressed tracking system?",
+      "rationale": "A common tracking view makes the state of the whole object discoverable even when large payloads live elsewhere.",
+      "evidence_guidance": "Inspect the root version control record and registered data, environment or module states. Git is not required; compatible extensions or equivalent systems qualify.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No content-addressed tracking is identified."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Code is content-addressed, but other present component classes are outside the tracking system."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Multiple component classes are content-addressed, but their states cannot all be resolved from the root tracking record."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "The root tracking record resolves the states of every identified component through one compatible content-addressed system."
+        }
+      ],
+      "source": {
+        "section": "Tracking",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L154"
+      }
+    },
+    {
+      "id": "T-03",
+      "dimension": "T",
+      "principles": [
+        "T.3"
+      ],
+      "title": "Attributable modification history",
+      "question": "Are component modifications recorded with identity, time and a description of the change?",
+      "rationale": "The manuscript distinguishes tracking a snapshot from tracking how that snapshot arose.",
+      "evidence_guidance": "Inspect reachable histories and provenance records, including large-data or external-module records. Identity may be a stable pseudonym; real-world identity verification is not required.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No modification history is available for the assessed components."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "A history exists but lacks actor, time or change descriptions throughout."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Actor, time and change descriptions are recorded for some component histories, but identified gaps remain."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "The reachable histories record actor, time and change descriptions for modifications across all identified component classes."
+        }
+      ],
+      "source": {
+        "section": "Tracking",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L155"
+      }
+    },
+    {
+      "id": "T-04",
+      "dimension": "T",
+      "principles": [
+        "T.4"
+      ],
+      "title": "Programmatic computation provenance",
+      "question": "Does execution automatically record the commands, inputs and outputs of computational steps?",
+      "rationale": "Executable source files describe intended processing; execution provenance records what was actually invoked.",
+      "evidence_guidance": "Inspect captured run records and the mechanism producing them. A script by itself is not an execution record. Do not award extra points because the current reviewer reran a command.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No captured computation provenance is identified."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Computation is described retrospectively or manually without automatically captured run records."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Run records are captured automatically, but commands, inputs or outputs are missing for some scoped computational steps."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Programmatically captured records identify commands, inputs and outputs for every scoped computational step."
+        }
+      ],
+      "source": {
+        "section": "Tracking",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L156"
+      }
+    },
+    {
+      "id": "T-05",
+      "dimension": "T",
+      "principles": [
+        "T.5"
+      ],
+      "title": "Versions linked to execution records",
+      "question": "Do provenance records identify the versions of all components used for each recorded execution?",
+      "rationale": "Current dependency versions do not establish which versions produced an earlier result.",
+      "evidence_guidance": "Inspect links from run records to the executed code, input data, configuration and environment states, including independently versioned modules.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Execution records do not identify component versions."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "An execution record names versions for code only, or uses unresolved moving labels."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Exact versions are linked for several component classes but a required class or scoped execution remains unresolved."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Every recorded scoped execution links the exact versions of all components involved, including environment and configuration."
+        }
+      ],
+      "source": {
+        "section": "Tracking",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L157"
+      }
+    },
+    {
+      "id": "T-06",
+      "dimension": "T",
+      "principles": [
+        "T.3"
+      ],
+      "title": "Authenticated provenance records",
+      "question": "Are recorded identities protected by verifiable signatures?",
+      "rationale": "The manuscript describes cryptographic signatures as an aspirational strengthening of self-reported origin, not a prerequisite for keeping useful history.",
+      "evidence_guidance": "Inspect signatures on provenance-bearing commits, tags or equivalent records and the published verification route. This concerns provenance records, whereas D-06 concerns distributed artifacts.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Provenance identities are unsigned or no usable signature verification route is supplied."
+        },
+        {
+          "value": 1,
+          "label": "Fulfilled",
+          "description": "Provenance-bearing records have signatures and a supplied route for recipients to verify the claimed signing identity."
+        }
+      ],
+      "source": {
+        "section": "Tracking",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L168"
+      }
+    },
+    {
+      "id": "A-01",
+      "dimension": "A",
+      "principles": [
+        "A.1"
+      ],
+      "title": "Acquisition instructions",
+      "question": "Are there sufficient instructions to obtain all components needed for the scoped computation?",
+      "rationale": "Locating a component is different from knowing how to acquire and prepare it for use.",
+      "evidence_guidance": "Follow the object’s documented retrieval sequence, including subcomponents and controlled-access request procedures. Do not require public access.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No acquisition instructions are supplied."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Instructions obtain the root object but omit acquisition of required external components."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Instructions cover external components but leave at least one required acquisition or preparation step unspecified."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Instructions cover acquisition and preparation of all identified required components, including any access prerequisites."
+        }
+      ],
+      "source": {
+        "section": "Actionability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L188"
+      }
+    },
+    {
+      "id": "A-02",
+      "dimension": "A",
+      "principles": [
+        "A.1"
+      ],
+      "title": "Setup instructions",
+      "question": "Are instructions sufficient to prepare a compatible computational environment?",
+      "rationale": "Actionability requires a usable recipe for the environment, not only a list of ingredients.",
+      "evidence_guidance": "Inspect installation commands, prerequisites, initialization and configuration instructions. Rate their operational completeness; P covers the completeness of the environment specification itself.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No environment setup procedure is supplied."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Setup names tools or packages but omits installation or initialization steps."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "A setup sequence is supplied but leaves identified essential configuration or initialization decisions to the recipient."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "A recipient can follow the supplied setup sequence without inventing essential installation, configuration or initialization steps."
+        }
+      ],
+      "source": {
+        "section": "Actionability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L194"
+      }
+    },
+    {
+      "id": "A-03",
+      "dimension": "A",
+      "principles": [
+        "A.1"
+      ],
+      "title": "Result reproduction instructions",
+      "question": "Do instructions explain how to reproduce every result within the declared scope?",
+      "rationale": "A runnable entry point is not sufficient if the relationship to the scoped results remains unknown.",
+      "evidence_guidance": "Map reported outputs to commands, their required order, arguments and output locations. Narrow the assessment scope explicitly rather than silently omitting inconvenient results.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No instructions link computation to scoped results."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Instructions cover at least one result but omit other scoped results or their commands."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "All scoped results have instructions, but ordering, arguments or output destinations remain ambiguous for at least one."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "All scoped results map to an unambiguous execution sequence, required arguments and expected output locations."
+        }
+      ],
+      "source": {
+        "section": "Actionability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L188"
+      }
+    },
+    {
+      "id": "A-04",
+      "dimension": "A",
+      "principles": [
+        "A.2"
+      ],
+      "title": "Executable acquisition and assembly",
+      "question": "Can supplied executable procedures retrieve and assemble the research object?",
+      "rationale": "The actionability section explicitly extends executable specification to retrieval and module composition.",
+      "evidence_guidance": "Inspect commands, manifests or workflows for retrieving components and composing modules. Manual authorization may remain necessary; score the procedure after authorized access.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Acquisition and assembly are described only in prose or are unspecified."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Executable commands acquire the root but require manual discovery or assembly of its required components."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Supplied procedures retrieve or assemble some required components, with other known steps remaining manual."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Supplied procedures retrieve and assemble all required components from their declared references after any documented authorization."
+        }
+      ],
+      "source": {
+        "section": "Actionability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L198"
+      }
+    },
+    {
+      "id": "A-05",
+      "dimension": "A",
+      "principles": [
+        "A.2"
+      ],
+      "title": "Executable result production",
+      "question": "Are result-producing procedures expressed as executable specifications?",
+      "rationale": "Executable specifications reduce the need to translate narrative methods into operational steps.",
+      "evidence_guidance": "Inspect scripts, workflows, notebooks with execution order, command files or equivalent specifications. Tool choice and reviewer execution do not determine the score.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Scoped computations are specified only narratively or are unspecified."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Executable fragments exist but do not form a result-producing procedure."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Executable procedures produce some scoped results, while other computational steps require manual translation from prose."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Executable procedures specify all computational steps needed to produce the scoped results."
+        }
+      ],
+      "source": {
+        "section": "Actionability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L189"
+      }
+    },
+    {
+      "id": "A-06",
+      "dimension": "A",
+      "principles": [
+        "A.2"
+      ],
+      "title": "Executable replay of provenance",
+      "question": "Can a recorded computation be re-executed from its captured specification?",
+      "rationale": "The manuscript names re-executable provenance as the actionability counterpart of inspectable tracking records.",
+      "evidence_guidance": "Inspect replay commands and the run specification they consume, including restoration or selection of recorded component states. Judge the capability, not whether this reviewer executed it.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No recorded computation can be replayed through a supplied procedure."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Records expose commands, but a recipient must manually reconstruct their inputs or execution context."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "A replay mechanism exists for some scoped computations, or requires manual resolution of recorded component states."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "A supplied replay mechanism resolves recorded component states and re-executes every scoped computation represented in the provenance."
+        }
+      ],
+      "source": {
+        "section": "Actionability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L199"
+      }
+    },
+    {
+      "id": "M-01",
+      "dimension": "M",
+      "principles": [
+        "M.1",
+        "M.2"
+      ],
+      "title": "Separable component boundaries",
+      "question": "Are components organized into identifiable modules with distinct responsibilities?",
+      "rationale": "Directly included modules and linked subdatasets are equally valid; M.2 permits alternatives rather than requiring a specific packaging mechanism.",
+      "evidence_guidance": "Inspect boundaries between present data, analysis, environments, configuration, licensing and results. A file or directory can be a module when its role is clear.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Components with different responsibilities are interleaved without identifiable boundaries."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Some roles are identifiable, but code, inputs or generated outputs remain intermingled."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Main roles have boundaries, but some present component classes have unclear membership or responsibility."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "All present component classes have explicit separable boundaries and roles, whether included directly or referenced."
+        }
+      ],
+      "source": {
+        "section": "Modularity",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L215"
+      }
+    },
+    {
+      "id": "M-02",
+      "dimension": "M",
+      "principles": [
+        "M.1"
+      ],
+      "title": "Independent module replacement",
+      "question": "Can a module be changed or replaced without editing unrelated components?",
+      "rationale": "Independent modules enable reuse and updates without reconstructing the whole object.",
+      "evidence_guidance": "Inspect dependency boundaries, declared interfaces and independently selectable module versions. Do not require a monorepo or separate repositories.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Changing a component requires changes scattered through unrelated components."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Boundaries exist, but module consumers depend on undocumented internal paths or state."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Modules have explicit inputs and outputs, but replacing an identified module still requires unrelated internal edits."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Modules have explicit interfaces and independently selectable states; replacement requires changes only at declared configuration or composition boundaries."
+        }
+      ],
+      "source": {
+        "section": "Modularity",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L235"
+      }
+    },
+    {
+      "id": "M-03",
+      "dimension": "M",
+      "principles": [
+        "M.3"
+      ],
+      "title": "Module-specific license scope",
+      "question": "Are license declarations assigned independently to modules?",
+      "rationale": "A module’s terms must remain identifiable when it is separated or reused.",
+      "evidence_guidance": "Inspect per-module declarations or a central mapping with explicit module scope. Identical licenses across modules are acceptable; separate files are not required.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No module-level license scope can be determined."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "A blanket declaration exists but does not state which modules it covers."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Some modules have independently attributable license declarations; others remain ambiguous."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Every module has an independently attributable declaration, including explicit shared-license mappings where appropriate."
+        }
+      ],
+      "source": {
+        "section": "Modularity",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L217"
+      }
+    },
+    {
+      "id": "M-04",
+      "dimension": "M",
+      "principles": [
+        "M.3"
+      ],
+      "title": "License compatibility at composition boundaries",
+      "question": "Is license compatibility addressed where modules are combined?",
+      "rationale": "Having license files does not establish that the assembled object’s combination is permitted.",
+      "evidence_guidance": "Inspect compatibility notes, machine-readable policies or documented handling of incompatible terms at actual composition boundaries. Rate declared handling, not a legal opinion by the reviewer.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No handling of license compatibility at module boundaries is recorded."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Module licenses are listed, but their combination is not addressed."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Compatibility is addressed for some combinations, but at least one identified boundary remains unresolved."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "The object records compatibility handling for every module combination, including any restrictions or separation needed to preserve permitted use."
+        }
+      ],
+      "source": {
+        "section": "Modularity",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L217"
+      }
+    },
+    {
+      "id": "M-05",
+      "dimension": "M",
+      "principles": [
+        "M.4"
+      ],
+      "title": "Access conditions separated by module",
+      "question": "Are components with differing access requirements isolated so that other modules remain usable?",
+      "rationale": "Controlled access is compatible with STAMPED; separating access boundaries avoids unnecessarily restricting the entire object.",
+      "evidence_guidance": "Identify access categories and module boundaries. If all components have the same access conditions, use the explicit equivalent-outcome anchor rather than invent an exclusion.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Access conditions cannot be determined, or restricted material inseparably blocks unrelated modules."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Different access conditions are identified, but affected components are not isolated."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Access boundaries isolate some differing conditions, but an identified unrelated module still inherits an avoidable restriction."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Components with differing access conditions are isolated and their interfaces are documented; alternatively, all components have demonstrably the same access conditions and no mixed-access boundary exists."
+        }
+      ],
+      "source": {
+        "section": "Modularity",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L218"
+      }
+    },
+    {
+      "id": "M-06",
+      "dimension": "M",
+      "principles": [
+        "M.1",
+        "M.2"
+      ],
+      "title": "Composable module specification",
+      "question": "Can the object’s module composition be reconstructed from an explicit specification?",
+      "rationale": "The manuscript’s modularity spectrum progresses from directories toward independently versioned and recursively installable assemblies.",
+      "evidence_guidance": "Inspect module manifests, dependency graphs, subdataset registrations or equivalent declarations. Inclusion by value and inclusion by reference receive equal treatment.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No specification identifies the object’s module composition."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "A module list exists but omits dependency relationships needed to assemble the object."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Module relationships are explicit, but at least one required module choice or connection must be inferred."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "A complete composition specification identifies modules and their connections so the same assembly can be reconstructed."
+        }
+      ],
+      "source": {
+        "section": "Modularity",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L235"
+      }
+    },
+    {
+      "id": "P-01",
+      "dimension": "P",
+      "principles": [
+        "P.1"
+      ],
+      "title": "Explicit host prerequisites",
+      "question": "Are required host tools, operating-system assumptions and resource constraints documented?",
+      "rationale": "Undocumented host state prevents adapting an otherwise self-contained object to another system.",
+      "evidence_guidance": "Inspect runtime prerequisites, platform assumptions and resource requirements actually relied on by the procedures. Do not require irrelevant hardware detail.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Host prerequisites are unspecified despite procedures depending on host state."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Some host tools are named, but required platform or resource assumptions remain implicit."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Tools and platform assumptions are documented, but an identified essential host prerequisite remains implicit."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "All identified host prerequisites and constraints are explicit, including tools, platform features and resource needs relied on by the procedures."
+        }
+      ],
+      "source": {
+        "section": "Portability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L243"
+      }
+    },
+    {
+      "id": "P-02",
+      "dimension": "P",
+      "principles": [
+        "P.1"
+      ],
+      "title": "Isolated host configuration",
+      "question": "Can host-specific settings be changed through explicit configuration?",
+      "rationale": "The manuscript allows unavoidable host coupling when adapting to a host requires changing configuration rather than analysis logic.",
+      "evidence_guidance": "Inspect paths, mount points, platform flags and resource settings. An object with no host-specific settings satisfies the equivalent-outcome anchor if its procedures demonstrate that fact.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Host-specific settings are embedded in procedures without an identifiable adaptation route."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Some host-specific settings are configurable, but others require edits to analysis logic."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Host-specific settings are configurable, but undocumented defaults or scattered configuration points remain."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "All host-specific settings are explicit and isolated from analysis logic, or the procedures require no host-specific settings."
+        }
+      ],
+      "source": {
+        "section": "Portability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L253"
+      }
+    },
+    {
+      "id": "P-03",
+      "dimension": "P",
+      "principles": [
+        "P.2"
+      ],
+      "title": "Complete environment specification",
+      "question": "Does the object specify the dependencies required to instantiate its computational environments?",
+      "rationale": "A container label or package list can conceal unspecified system libraries or inherited state.",
+      "evidence_guidance": "Inspect environments for analysis and result rendering, including language runtime, libraries and OS-level dependencies as relevant. Exact frozen builds are assessed in D-03.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No computational environment specification is supplied."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Only a runtime or top-level application names the environment; required dependencies remain unspecified."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "An environment specification covers major dependencies but an identified runtime, library or system dependency is omitted."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "The specification covers all identified runtime, library and system dependencies required by the scoped computations."
+        }
+      ],
+      "source": {
+        "section": "Portability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L244"
+      }
+    },
+    {
+      "id": "P-04",
+      "dimension": "P",
+      "principles": [
+        "P.3"
+      ],
+      "title": "Version-controlled environment definitions",
+      "question": "Are the environment definitions themselves version controlled?",
+      "rationale": "Versioning an output or container name alone does not preserve the definition used to construct it.",
+      "evidence_guidance": "Inspect tracking records for each environment definition used in the object. Environment definitions may be stored in explicitly linked tracked modules.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "At least one required environment definition is absent from the object’s versioned records."
+        },
+        {
+          "value": 1,
+          "label": "Fulfilled",
+          "description": "Every required environment definition is included in the object’s versioned records or an explicitly linked versioned module."
+        }
+      ],
+      "source": {
+        "section": "Portability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L245"
+      }
+    },
+    {
+      "id": "P-05",
+      "dimension": "P",
+      "principles": [
+        "P.2"
+      ],
+      "title": "Machine-readable environment specification",
+      "question": "Can environment specifications be consumed by tooling on a compatible host?",
+      "rationale": "The portability summary calls for machine-readable specifications where possible, without selecting a particular environment technology.",
+      "evidence_guidance": "Inspect environment manifests, recipes, machine images or equivalent specifications and their documented compatible hosts. Rate specification capability, not the number of hosts tested.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Environment requirements are only prose or are unspecified."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Machine-readable definitions cover some dependencies but require additional manual interpretation to construct the environment."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "A machine-readable definition covers the environment, but includes an unresolved host-specific assumption outside documented configuration."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Machine-readable definitions can instantiate the specified environment on documented compatible hosts using only explicit host configuration."
+        }
+      ],
+      "source": {
+        "section": "Portability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L350"
+      }
+    },
+    {
+      "id": "E-01",
+      "dimension": "E",
+      "principles": [
+        "E.1"
+      ],
+      "title": "Fresh execution environment",
+      "question": "Are computations configured to start from a fresh environment derived from the specification?",
+      "rationale": "A previously assembled environment can contain undocumented state even if a specification also exists.",
+      "evidence_guidance": "Inspect execution procedures and supplied run records for environment creation or restoration from the tracked specification. Reviewer reruns are useful evidence, not a separate scoring requirement.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Execution relies on a long-lived environment whose accumulated state is unspecified."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "A fresh environment is recommended but the supplied execution procedure uses an existing environment by default."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "The supplied procedure explicitly creates or restores a fresh specified environment, but this is a separate manual step."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "The execution procedure creates or restores a fresh environment from the specified state for every computational run."
+        }
+      ],
+      "source": {
+        "section": "Ephemerality",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L264"
+      }
+    },
+    {
+      "id": "E-02",
+      "dimension": "E",
+      "principles": [
+        "E.1"
+      ],
+      "title": "Disposable environment lifecycle",
+      "question": "Can the execution environment be discarded without losing required results or provenance?",
+      "rationale": "Throwaway environments separate persistent research artifacts from disposable computational state.",
+      "evidence_guidance": "Inspect output destinations, provenance persistence and cleanup commands. Do not penalize retained immutable images or explicit caches that cannot silently change the specified state.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Required results or provenance exist only in mutable environment state that must be retained."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Some outputs are persisted outside the environment, but required results or provenance would be lost on disposal."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "All required results and provenance are persisted independently, and environment disposal is an explicit manual step."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "All required results and provenance are persisted independently, and the execution procedure disposes of the mutable environment automatically."
+        }
+      ],
+      "source": {
+        "section": "Ephemerality",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L274"
+      }
+    },
+    {
+      "id": "E-03",
+      "dimension": "E",
+      "principles": [
+        "E.1"
+      ],
+      "title": "Independence from previous runs",
+      "question": "Does the execution procedure prevent earlier runs from supplying undeclared state?",
+      "rationale": "The ephemerality summary requires reproducibility without knowledge of previous runs.",
+      "evidence_guidance": "Inspect workspace initialization, temporary files, caches and input/output declarations. A declared tracked prior result is an input, not an undeclared dependency.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Execution depends on files or mutable state from earlier runs that are not declared inputs."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "A manual cleanup is suggested, but the required initial workspace state is unspecified."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "The initial workspace and retained inputs are explicit, but establishing the clean state requires a manual reset."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "The procedure establishes a clean workspace and only declared inputs for each run; retained caches cannot substitute untracked computation state."
+        }
+      ],
+      "source": {
+        "section": "Ephemerality",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L357"
+      }
+    },
+    {
+      "id": "D-01",
+      "dimension": "D",
+      "principles": [
+        "D.1"
+      ],
+      "title": "Retrieval in the intended state",
+      "question": "Can recipients obtain every referenced component in its intended version?",
+      "rationale": "Distributability asks whether the referenced state can actually be obtained, beyond its presence in a manifest or its recorded identity.",
+      "evidence_guidance": "Inspect component locations and access routes for the assessed version. Document observed access failures and distinguish authorization requirements from missing resources.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No usable recipient retrieval route is supplied for the assessed object’s components."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "The root is obtainable, but at least one essential component has no supplied retrieval route."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Routes exist for all essential components, but at least one intended version is unavailable or resolves only to a moving state."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Routes provide the intended version of every essential component, including documented authorized access for controlled resources."
+        }
+      ],
+      "source": {
+        "section": "Distributability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L288"
+      }
+    },
+    {
+      "id": "D-02",
+      "dimension": "D",
+      "principles": [
+        "D.1"
+      ],
+      "title": "Persistence beyond a single mutable location",
+      "question": "Are distributed components protected against changes or disappearance of a hosting location?",
+      "rationale": "The manuscript names archives, immutable bundles and mirrors as complementary persistence strategies.",
+      "evidence_guidance": "Inspect archival deposits, preservation commitments, content-addressed archives and mirrors. A successful download today alone does not establish persistence.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Components depend on unversioned mutable locations without a persistence mechanism."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Versioned component locations exist, but at least one essential resource relies solely on a mutable service without preservation or immutable bundling."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "All essential components have an immutable bundle, archival location or explicit preservation route, but no independent recovery route is supplied."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "All essential components have preserved intended states and an independent retrieval or recovery route if their primary host fails."
+        }
+      ],
+      "source": {
+        "section": "Distributability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L308"
+      }
+    },
+    {
+      "id": "D-03",
+      "dimension": "D",
+      "principles": [
+        "D.2"
+      ],
+      "title": "Frozen environment reconstruction",
+      "question": "Do environment specifications resolve dependencies to fixed states for reproducible builds?",
+      "rationale": "An executable build recipe with moving dependencies can construct a different environment later.",
+      "evidence_guidance": "Inspect pinned base images, lockfiles, digests, build inputs and external downloads. A published frozen image without a reproducible build definition does not alone satisfy the highest anchor.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No usable environment build specification is supplied."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "A build specification exists but resolves required dependencies through moving or unpinned references."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Top-level dependencies are pinned, but transitive dependencies, base state or other build inputs remain unresolved."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "The build specification fixes all dependency and build-input states and defines their reconstruction without moving resolution."
+        }
+      ],
+      "source": {
+        "section": "Distributability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L289"
+      }
+    },
+    {
+      "id": "D-04",
+      "dimension": "D",
+      "principles": [
+        "D.3"
+      ],
+      "title": "Resolvable license identifiers",
+      "question": "Does each distributed module identify its governing licenses unambiguously?",
+      "rationale": "A resolvable license identifier helps recipients identify redistribution and reuse terms without guessing.",
+      "evidence_guidance": "Inspect SPDX identifiers, stable license URLs or equivalent references for module and bundled-asset terms. Evaluate identifier clarity rather than whether the license is permissive.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No distributed module has an explicit resolvable license identifier."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Terms are mentioned but their license identities or resolution locations are ambiguous."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "Some modules have resolvable identifiers, but an identified module or bundled-asset license remains ambiguous."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "Every module and its bundled assets have unambiguous resolvable license identifiers or stable references to the governing terms."
+        }
+      ],
+      "source": {
+        "section": "Distributability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L290"
+      }
+    },
+    {
+      "id": "D-05",
+      "dimension": "D",
+      "principles": [
+        "D.1"
+      ],
+      "title": "Coherent frozen distribution",
+      "question": "Does the distributed record fix the component versions intended to be used together?",
+      "rationale": "A collection of independently changing resources is not the same as a distribution of the intended joint state.",
+      "evidence_guidance": "Inspect releases, archives, manifests or root snapshots fixing module selections. Assess the coherent joint version selection here; assess actual component retrieval separately under D-01.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "No distributed record fixes the object’s component combination."
+        },
+        {
+          "value": 1,
+          "label": "Limited",
+          "description": "Components are distributed independently without a declared joint version selection."
+        },
+        {
+          "value": 2,
+          "label": "Partial",
+          "description": "A release or root snapshot selects component versions, but at least one required selection remains floating or outside it."
+        },
+        {
+          "value": 3,
+          "label": "Fulfilled",
+          "description": "A distributed release, archive or root snapshot fixes all required component versions as one coherent joint selection."
+        }
+      ],
+      "source": {
+        "section": "Distributability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L295"
+      }
+    },
+    {
+      "id": "D-06",
+      "dimension": "D",
+      "principles": [
+        "D.1"
+      ],
+      "title": "Verifiable distributed-artifact origin",
+      "question": "Can recipients verify the claimed origin and build source of distributed executable artifacts?",
+      "rationale": "The manuscript identifies signed releases and supply-chain attestations as an aspirational distributability property where consumers need origin and build evidence.",
+      "evidence_guidance": "Inspect artifact signatures or attestations linking executable distributions to their source and producer. For source-only objects with no executable distribution, record an applicability objection rather than silently excluding this pilot criterion.",
+      "anchors": [
+        {
+          "value": 0,
+          "label": "Not demonstrated",
+          "description": "Distributed executable artifacts lack a supplied, verifiable link to their claimed producer and build source, or no executable distribution is present."
+        },
+        {
+          "value": 1,
+          "label": "Fulfilled",
+          "description": "Distributed executable artifacts carry verifiable signatures or attestations linking them to the claimed producer and build source."
+        }
+      ],
+      "source": {
+        "section": "Distributability",
+        "locator": "https://github.com/stamped-principles/stamped-paper/blob/5bbb3ed471a5e9bf8c8e91cdef6b96686c4c53ea/main.tex#L309"
+      }
+    }
+  ]
+}
